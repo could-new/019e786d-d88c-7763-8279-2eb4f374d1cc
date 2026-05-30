@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:printing/printing.dart';
+import 'paper_content.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +12,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Paper Generator',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/': (context) => const MyHomePage(title: 'Paper Ilmiah Kopi'),
       },
     );
   }
@@ -33,14 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,20 +42,14 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          ],
-        ),
+      body: PdfPreview(
+        build: (format) => generatePaperPdf(),
+        canChangeOrientation: false,
+        canChangePageFormat: false,
+        canDebug: false,
+        allowPrinting: true,
+        allowSharing: true,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
     );
   }
 }
